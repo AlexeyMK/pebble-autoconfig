@@ -36,7 +36,18 @@ class autoconfig(Task.Task):
 			env.filters[filterName] = filterFun
 	
 		template = env.get_template(tpl)
-		
+
+		# AMK hack: concatenate user's native pebble-js-app.js
+		if tpl == "pebble-js-app.js.jinja":
+			original_app_js = os.path.join(tpldir,
+				"..", "..", "..", "src", "js", "pebble-js-app.js")
+			try:
+				import pdb; pdb.set_trace()
+				original_js_contents = open(original_app_js, 'r').read()
+				self.appinfo["original_js_contents"] = original_js_contents
+			except IOError:
+				print "User custom JS not found"
+
 		f = open(self.outputs[0].abspath(), 'w')
 		f.write(template.render(self.appinfo))
 		f.close()
