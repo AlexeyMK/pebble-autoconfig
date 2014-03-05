@@ -42,7 +42,6 @@ class autoconfig(Task.Task):
 			original_app_js = os.path.join(tpldir,
 				"..", "..", "..", "src", "js", "pebble-js-app.js")
 			try:
-				import pdb; pdb.set_trace()
 				original_js_contents = open(original_app_js, 'r').read()
 				self.appinfo["original_js_contents"] = original_js_contents
 			except IOError:
